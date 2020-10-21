@@ -1,0 +1,27 @@
+/* Buttons */
+
+@button-background-color: #ffffff;
+@button-color: #202428;
+@button-border-color: @button-color;
+@button-hover-background-color: @button-color;
+@button-hover-color: @button-background-color;
+
+.button {
+  border-radius: 5px;
+  border-width: 1px;
+  width: 50%;
+  height: 50px;
+  margin: 10px;
+  outline: none;
+
+  &-minimalistic {
+    transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+    background-color: @button-background-color;
+    color: @button-color;
+    border-color: @button-border-color;
+  }
+  &:hover {
+    background-color: @button-hover-background-color;
+    color: @button-hover-color;
+  }
+}
