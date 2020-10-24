@@ -18,8 +18,8 @@
             <button class="button button-minimalistic" id="buttonRandom" type="button">Go</button>
         </div>
     </div>
-    <div class="row text-center" id="content" style="display: none">
-        <div class="col-md">
+    <div class="row" id="content">
+        <div class="col-xl-4">
             <div id="first" class="block-content"></div>
         </div>
     </div>
@@ -28,18 +28,93 @@
 </html>
 
 <script>
-    $('#buttonRandom').on('click', function () {
+    $(function() {
+        main();
+        function main() {
+            $('#buttonRandom').on('click', function () {
+                $('#rowRand').hide();
+                $.ajax({
+                    dataType: "json",
+                    url: 'controllers/ControllerRandomizer.php',
+                    type: 'POST',
+                    data: {}
+                }).done(function( result ){
+                    console.log(result);
+                    viewItemsFilm(result.data.films);
+                    setTimeout(function () {
+                        startAnimation(result.stages);
+                    }, 5000);
+                });
+            });
+        }
+
+        function viewItemsFilm(films) {
+            let container = document.getElementById("first");
+            films.forEach((film) => {
+                let elementFilm = createItemFilm(film);
+                container.insertBefore(elementFilm, null);
+            });
+        }
+
+        function createItemFilm( filmData ) {
+            let filmItem = document.createElement("div");
+            filmItem.classList.add("film-item");
+            filmItem.id = 'film-item-' + filmData.id;
+            filmItem.innerHTML = '<div class="container"><div class="row"><div class="col-xl-2"><img class="film-item-poster" src="' + filmData.imageLink + '"></div><div class="col-xl-6"><div class="film-item-info"><div>' + filmData.name.rus + '</div><div>' + filmData.name.eng + '</div><div>' + filmData.genre + '</div></div></div><div class="col-xl-4"><div>' + filmData.rating_kp + '</div><div>' + filmData.rating_IMDb + '</div></div></div></div>';
+            return filmItem;
+        }
+        
+        function startAnimation(stages) {
+            let twoStep = stages['two'];
+
+            aboveCenter(twoStep[0], 630, 0, 330);
+
+            setTimeout(function () {
+                aboveCenter(twoStep[1], 630, 110, 330);
+            }, 1000);
+
+            setTimeout(function () {
+                aboveCenter(twoStep[2], 630, 110, 330);
+            }, 2000);
+
+            let threeStep = stages['three'];
+
+
+            setTimeout(function () {
+                aboveCenter(threeStep, 1260, 0, 660);
+            }, 4000);
+        }
+        
+        function aboveCenter(id, left, offset, sumHeightItems) {
+            let startPoint = (screen.height - sumHeightItems) / 2;
+            let itemPoint = document.getElementById("film-item-" + id).getBoundingClientRect().top;
+            let element = $("#film-item-" + id);
+            element.animate({
+                left: left + 'px'
+            });
+            if ( startPoint > itemPoint ){
+                element.animate({
+                    top: startPoint - itemPoint + offset + 'px'
+                });
+            } else {
+                element.animate({
+                    bottom: itemPoint - startPoint + offset + 'px'
+                });
+            }
+            console.log('id: ' + id);
+            console.log('startPoint: ' + startPoint);
+            console.log('itemPoint: ' + itemPoint);
+        }
+    });
+    /*$('#buttonRandom').on('click', function () {
         $.ajax({
+            dataType: "json",
             url: 'controllers/ControllerRandomizer.php',
             type: 'POST',
             data: {}
         }).done(function( result ){
 
-            console.log(result[0]);
-            console.log(result[1]);
-            console.log(result[2]);
-            console.log(result[3]);
-            console.log(result[4]);
+            console.log(result);
             $('#rowRand').addClass('top');
             $('#content').show();
 
@@ -110,5 +185,5 @@
 
             }, 1200);
         });
-    });
+    });*/
 </script>

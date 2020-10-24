@@ -3,60 +3,102 @@
 class KinopoiskRandom
 {
     private $count_iteration;
-    public $film, $count_all;
-    public $array_numbers = [];
-    public $array_name = [];
-    public $array_numbers_two = [];
-
+    private $film, $count_all;
+    private $array_numbers = [];
+    private $array_data = [];
+    private $array_numbers_two = [];
+    public  $response = [];
 
     function __construct()
     {
 
         include('phpQuery-onefile.php');
-        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
-        //$html = file_get_contents('kp.html'); //использовать локальный, если по ссылке забанили
+//        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
+        $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
+
         phpQuery::newDocumentHTML($html); 
         $count = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
 
         $this->count_all = $count;
-        $this->count_iteration = rand(5, 10);
+        $this->count_iteration = rand(5, 8);
     }
 
     public function main(){
-
         $this->_iteration($this->count_iteration, 'one');
         //var_dump($this->array_numbers);
-        $this->_delete_dublicate($this->array_numbers);
+        $this->_deleteDuplicate($this->array_numbers);
         //var_dump($this->array_numbers);
-        $this->_create_correctly_array($this->array_numbers, 'one');
+        $this->_createCorrectlyArray($this->array_numbers, 'one');
         //var_dump($this->array_numbers);
 
         $this->count_iteration = 3;
 
         $this->_iteration($this->count_iteration, 'two');
         //var_dump($this->array_numbers_two);
-        $this->_delete_dublicate($this->array_numbers_two);
+        $this->_deleteDuplicate($this->array_numbers_two);
         //var_dump($this->array_numbers_two);
-        $this->_create_correctly_array($this->array_numbers_two, 'two');
+        $this->_createCorrectlyArray($this->array_numbers_two, 'two');
         //var_dump($this->array_numbers_two);
 
 
         $array_keys = array_keys($this->array_numbers_two);
         $this->film = $this->array_numbers_two[$array_keys[rand(0, count($array_keys) - 1 )]];
 
-        foreach ($this->array_numbers as $key => $value) {
-            $this->array_name[$key] = $value . ' : ' . $this->_get_name($value);
-        }
+        $this->_getData($this->array_numbers);
+
+        $this->response = [
+            'stages' => [
+                'one' => $this->array_numbers,
+                'two' => $this->array_numbers_two,
+                'three' => $this->film
+            ],
+            'data' => [
+                'films' => $this->array_data,
+                'count_all' => $this->count_all
+            ]
+        ];
+
+//        echo '<pre>';
+//        var_dump($this->response);
+//        echo '</pre>';
+//
+//        $fp = fopen('results.json', 'w');
+//        fwrite($fp, json_encode($this->response));
+//        fclose($fp);
     }
 
-    private function _get_name ($number) {
-        foreach (pq('div.num') as $value) {
-            if ( $value->nodeValue == $number) {
-                $name = pq($value)->parent('li')->find('span:eq(0)')->text();
-                $name = strtok($name, ')').')';
-                return $name;
+    private function _getData($numbersFilms) {
+        $dataFilms = [];
+        foreach (pq('ul#itemList li') as $film) {
+            $number = (int)pq($film)->find('div.num')->text();
+            if (array_search($number, $numbersFilms)) {
+                $link = 'https://www.kinopoisk.ru' . pq($film)->find('.images .poster .flap_img')->attr('title');
+                $name = $this->_converterCyrillic(pq($film)->find('.info .name')->text());
+                $nameString = $this->_converterCyrillic(pq($film)->find('.info span:eq(0)')->text());
+                $genre = $this->_converterCyrillic(pq($film)->find('.info span:eq(1)')->text());
+                $rating = pq($film)->find('.rating')->text();
+                $ratingIMDb = pq($film)->find('.imdb')->text();
+
+                $infoFilm = [
+                    'id' => $number,
+                    'name' => [
+                        'rus' => $name,
+                        'eng' => $nameString,
+                        'for_torrent' => strtok($nameString, ')').')'
+                    ],
+                    'rating_kp' => $rating,
+                    'rating_IMDb' => $ratingIMDb,
+                    'imageLink' => $link,
+                    'genre' => $genre
+                ];
+                array_push($dataFilms, $infoFilm);
             }
         }
+        $this->array_data = $dataFilms;
+    }
+
+    private function _converterCyrillic ($string) {
+        return iconv('UTF-8', 'ISO-8859-1', $string);
     }
 
     private function _iteration($count_iteration, $mode){
@@ -76,11 +118,11 @@ class KinopoiskRandom
         }
     }    
 
-    private function _delete_dublicate(&$array){
+    private function _deleteDuplicate(&$array){
         $array = array_unique($array);
     }
 
-    private function _check_array($array) {
+    private function _checkArray($array) {
         if (count($array) == $this->count_iteration) {
             return true;
         } else {
@@ -88,13 +130,13 @@ class KinopoiskRandom
         }
     }
 
-    private function _create_correctly_array(&$array, $mode)
+    private function _createCorrectlyArray(&$array, $mode)
     {
-        // проверка на наличие дубликатов, их удаление, расчет разницы, запись в массив недостоющих элементов
-        while(!$this->_check_array($array)){                                          
+        // проверка на наличие дубликатов, их удаление, расчет разницы, запись в массив недостающих элементов
+        while(!$this->_checkArray($array)){
             $difference = $this->count_iteration - count($array);
             $this->_iteration($difference, $mode);
-            $this->_delete_dublicate($array); 
+            $this->_deleteDuplicate($array);
         }
     }    
 }
