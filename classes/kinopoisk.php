@@ -13,8 +13,8 @@ class KinopoiskRandom
     {
 
         include('phpQuery-onefile.php');
-//        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
-        $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
+        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
+//        $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
 
         phpQuery::newDocumentHTML($html); 
         $count = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
@@ -71,7 +71,7 @@ class KinopoiskRandom
         $dataFilms = [];
         foreach (pq('ul#itemList li') as $film) {
             $number = (int)pq($film)->find('div.num')->text();
-            if (array_search($number, $numbersFilms)) {
+            if (in_array($number, $numbersFilms)) {
                 $link = 'https://www.kinopoisk.ru' . pq($film)->find('.images .poster .flap_img')->attr('title');
                 $name = $this->_converterCyrillic(pq($film)->find('.info .name')->text());
                 $nameString = $this->_converterCyrillic(pq($film)->find('.info span:eq(0)')->text());
