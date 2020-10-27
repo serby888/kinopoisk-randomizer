@@ -31,8 +31,9 @@
     $(function() {
         main();
         function main() {
-            $('#buttonRandom').on('click', function () {
-                $('#rowRand').hide();
+            $('#buttonRandom').off().on('click', function () {
+                $('#rowRand').fadeOut();
+                $('.close').fadeIn();
                 $.ajax({
                     dataType: "json",
                     url: 'controllers/ControllerRandomizer.php',
@@ -46,6 +47,20 @@
                     }, 5000);
                 });
             });
+            $('.close').off().on('click', function () {
+                closeResult();
+            });
+            $('body').on("keyup", function(e){
+                if(e.key === "Escape") {
+                    closeResult();
+                }
+            });
+        }
+
+        function closeResult() {
+            $('#first').empty();
+            $('#rowRand').fadeIn();
+            $('.close').fadeOut();
         }
 
         function viewItemsFilm(films) {
