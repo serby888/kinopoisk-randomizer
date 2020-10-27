@@ -15,7 +15,7 @@ class KinopoiskRandom
         include('phpQuery-onefile.php');
         $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
 //        $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
-
+        $html = str_replace("&nbsp;", ' ', $html);
         phpQuery::newDocumentHTML($html); 
         $count = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
 
