@@ -45,6 +45,7 @@
                     viewItemsFilm(result.data.films);
                     setTimeout(function () {
                         startAnimation(result.stages);
+                        openTorrent(result);
                     }, 5000);
                 });
             });
@@ -83,123 +84,51 @@
         function startAnimation(stages) {
             let twoStep = stages['two'];
 
-            aboveCenter(twoStep[0], 630, 0, 330);
+            toLeft($("#film-item-" + twoStep[0]), 630);
+            toTop($("#film-item-" + twoStep[0]), 130);
 
             setTimeout(function () {
-                aboveCenter(twoStep[1], 630, 110, 330);
+                toLeft($("#film-item-" + twoStep[1]), 630);
+                toTop($("#film-item-" + twoStep[1]), 250);
             }, 1000);
 
             setTimeout(function () {
-                aboveCenter(twoStep[2], 630, 110, 330);
+                toLeft($("#film-item-" + twoStep[2]), 630);
+                toTop($("#film-item-" + twoStep[2]), 370);
             }, 2000);
 
             let threeStep = stages['three'];
 
-
             setTimeout(function () {
-                aboveCenter(threeStep, 1260, 0, 660);
+                toLeft($("#film-item-" + threeStep), 1260);
             }, 4000);
         }
-        
-        function aboveCenter(id, left, offset, sumHeightItems) {
-            let startPoint = (screen.height - sumHeightItems) / 2;
-            let itemPoint = document.getElementById("film-item-" + id).getBoundingClientRect().top;
-            let element = $("#film-item-" + id);
+
+        function toTop(element, startPoint) {
+            let offset = startPoint - element.position()['top'];
+            if ( offset ){
+                element.animate({
+                    top: offset + 'px'
+                });
+            }
+        }
+
+        function toLeft(element, left) {
             element.animate({
                 left: left + 'px'
             });
-            if ( startPoint > itemPoint ){
-                element.animate({
-                    top: startPoint - itemPoint + offset + 'px'
-                });
-            } else {
-                element.animate({
-                    bottom: itemPoint - startPoint + offset + 'px'
-                });
-            }
-            console.log('id: ' + id);
-            console.log('startPoint: ' + startPoint);
-            console.log('itemPoint: ' + itemPoint);
+        }
+
+        function openTorrent(result) {
+            setTimeout(function () {
+                window.open('https://rutracker.org/forum/tracker.php?nm=' + getTorrentName(result.data.films, result.stages.three)[0].name.for_torrent, '_blank');
+            }, 5000);
+        }
+
+        function getTorrentName(data, id) {
+            return data.filter(
+                function(data){ return data.id == id }
+            );
         }
     });
-    /*$('#buttonRandom').on('click', function () {
-        $.ajax({
-            dataType: "json",
-            url: 'controllers/ControllerRandomizer.php',
-            type: 'POST',
-            data: {}
-        }).done(function( result ){
-
-            console.log(result);
-            $('#rowRand').addClass('top');
-            $('#content').show();
-
-            setTimeout(function () {
-                $.each(result[0], function( index, value ) {
-                    $( "#first" ).append( "<span class='item' data-item=" + value + ">" + result[1][index] + "</span><br><br>" );
-                });
-                let indexfirst;
-                $('div#first span.item').each(function (index, value) {
-                    var thisvalue = $(value);
-
-                    setTimeout(function () {
-                        //thisvalue.addClass('show-item')
-                        thisvalue.animate({
-                            height: 'show',
-                            width: '350px'
-                        })
-                    }, index*500);
-
-                    indexfirst = index;
-                });
-
-                var top = 0;
-                setTimeout(function () {
-                    $('div#first span.item').animate({
-                        opacity: '0.5'
-                    });
-                }, indexfirst*800);
-
-                let indexsecond;
-
-                $.each(result[2], function( index, value ) {
-                    setTimeout(function () {
-
-                        $('div#first span.item[data-item = ' + value + ']').animate({
-                            opacity: '1',
-                            left: '420px'
-                        });
-                        $('div#first span.item[data-item = ' + value + ']').animate({
-                            top: top + 'px'
-                        });
-                        top = top + 48;
-                    }, (index + indexfirst)*800);
-                    indexsecond = index;
-                });
-
-                setTimeout(function () {
-                    $('div#first span.item').animate({
-                        opacity: '0.5'
-                    });
-                }, (indexfirst + indexsecond)*1000);
-
-                setTimeout(function () {
-
-                    $('div#first span.item[data-item = ' + result[3] + ']').animate({
-                        opacity: '1',
-                        left: '840px'
-                    });
-                    $('div#first span.item[data-item = ' + result[3] + ']').animate({
-                        top: '0px'
-                    });
-                }, (indexfirst + indexsecond)*1000);
-
-                setTimeout(function () {
-                    window.open('https://rutracker.org/forum/tracker.php?nm=' + $('div#first span.item[data-item = ' + result[3] + ']').text().split(' : ')[1].slice(0, -7), '_blank');
-                    window.open('http://new-rutor.org/search/' + $('div#first span.item[data-item = ' + result[3] + ']').text().split(' : ')[1].slice(0, -7), '_blank');
-                }, (indexfirst + indexsecond)*1250);
-
-            }, 1200);
-        });
-    });*/
 </script>
