@@ -12,6 +12,7 @@
 </head>
 <body>
 <div class="container-fluid h-100">
+    <a class="close" href="#"></a>
     <div id="rowRand" class="row h-100 justify-content-md-center align-items-center">
         <div  class="col-md-auto text-center">
             <h1>Randomizer <span>КиноПоиск</span> </h1>
@@ -75,7 +76,7 @@
             let filmItem = document.createElement("div");
             filmItem.classList.add("film-item");
             filmItem.id = 'film-item-' + filmData.id;
-            filmItem.innerHTML = '<div class="container"><div class="row"><div class="col-xl-2"><img class="film-item-poster" src="' + filmData.imageLink + '"></div><div class="col-xl-6"><div class="film-item-info"><div>' + filmData.name.rus + '</div><div>' + filmData.name.eng + '</div><div>' + filmData.genre + '</div></div></div><div class="col-xl-4"><div>' + filmData.rating_kp + '</div><div>' + filmData.rating_IMDb + '</div></div></div></div>';
+            filmItem.innerHTML = '<div class="container"><div class="row"><div class="col-xl-2"><img class="film-item-poster" src="' + filmData.imageLink + '"></div><div class="col-xl-6"><div class="film-item-info"><div class="movie-title">' + filmData.name.rus + '</div><div class="movie-title">' + filmData.name.eng + '</div><div class="movie-genre">' + filmData.genre + '</div></div></div><div class="col-xl-4"><div>' + filmData.rating_kp + '</div><div>' + filmData.rating_IMDb + '</div></div></div></div>';
             return filmItem;
         }
         

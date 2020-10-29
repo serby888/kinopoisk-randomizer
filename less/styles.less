@@ -43,7 +43,12 @@ h1 {
 //    position: relative;
 //    left: -105%;
 //}
+#first {
+    margin-top: 10px;
+}
+
 .film-item {
+    height: 110px;
     background: #efefef;
     padding: 15px;
     border-radius: 30px;
@@ -52,6 +57,21 @@ h1 {
     display: block;
     animation: fadeIn 1s cubic-bezier(0.19, 0.9, 0.32, 1.28) ;
     animation-fill-mode: both;
+    .movie-genre,
+    .movie-title {
+        white-space: nowrap;
+        overflow: hidden;
+        position: relative;
+        &:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 40px;
+            height: 100%;
+            background: linear-gradient(to left, rgb(239 239 239), #fff0 100%);
+        }
+    }
 }
 
 
@@ -83,10 +103,10 @@ h1 {
 .film-item:nth-child(7) {
     animation-delay: @start-animation-delay * 6;
 }
-//
-//.film-item:nth-child(8) {
-//    animation-delay: @start-animation-delay * 8;
-//}
+
+.film-item:nth-child(8) {
+    animation-delay: @start-animation-delay * 8;
+}
 //
 //.film-item:nth-child(9) {
 //    animation-delay: @start-animation-delay * 9;
@@ -109,4 +129,32 @@ h1 {
         opacity: 1;
         right: 0;
     }
+}
+
+
+.close {
+    position: absolute;
+    right: 32px;
+    top: 32px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.3;
+    display: none;
+}
+.close:hover {
+    opacity: 1;
+}
+.close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #333;
+}
+.close:before {
+    transform: rotate(45deg);
+}
+.close:after {
+    transform: rotate(-45deg);
 }
