@@ -45,7 +45,7 @@ $(function() {
         let filmItem = document.createElement("div");
         filmItem.classList.add("film-item");
         filmItem.id = 'film-item-' + filmData.id;
-        filmItem.innerHTML = '<div class="container"><div class="row"><div class="col-xl-2"><img class="film-item-poster" src="' + filmData.imageLink + '"></div><div class="col-xl-6"><div class="film-item-info"><div class="movie-title">' + filmData.name.rus + '</div><div class="movie-title">' + filmData.name.eng + '</div><div class="movie-genre">' + filmData.genre + '</div></div></div><div class="col-xl-4"><div>' + filmData.rating_kp + '</div><div>' + filmData.rating_IMDb + '</div></div></div></div>';
+        filmItem.innerHTML = '<div class="container"><div class="row"><div class="col-xl-2"><img class="film-item-poster" src="' + filmData.imageLink + '"></div><div class="col-xl-6"><div class="film-item-info"><div class="movie-title">' + filmData.name.rus + '</div><div class="movie-title">' + filmData.name.eng + '</div><div class="movie-genre">' + filmData.genre + '</div></div></div><div class="col-xl-4"><div class="film-item-rating"><span class="rating-value ' + getClassStatusFilm(filmData.rating_kp.ratingValue) + '">' + filmData.rating_kp.ratingValue + '</span><span class="rating-count">' + filmData.rating_kp.ratingCount + '</span><span class="rating-title">КП</span></div><div class="film-item-rating"><span class="rating-value ' + getClassStatusFilm(filmData.rating_IMDb.ratingValue) + '">' + filmData.rating_IMDb.ratingValue + '</span><span class="rating-count">' + filmData.rating_IMDb.ratingCount + '</span><span class="rating-title">IMDb</span></div></div></div></div>';
         return filmItem;
     }
 
@@ -90,12 +90,27 @@ $(function() {
     function openTorrent(result) {
         setTimeout(function () {
             window.open('https://rutracker.org/forum/tracker.php?nm=' + getTorrentName(result.data.films, result.stages.three)[0].name.for_torrent, '_blank');
-        }, 5000);
+        }, 6000);
     }
 
     function getTorrentName(data, id) {
         return data.filter(
             function(data){ return data.id == id }
         );
+    }
+    function getClassStatusFilm(rating) {
+
+        var status = '';
+
+        if (rating < 5) {
+            status = 'rating-value--negative';
+        }
+        if (5 > rating < 7) {
+            status = 'rating-value--neutral';
+        }
+        if (rating > 7) {
+            status = 'rating-value--positive'
+        }
+        return status;
     }
 });

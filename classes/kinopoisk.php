@@ -86,8 +86,8 @@ class KinopoiskRandom
                         'eng' => $nameString,
                         'for_torrent' => strtok($nameString, ')').')'
                     ],
-                    'rating_kp' => $rating,
-                    'rating_IMDb' => $ratingIMDb,
+                    'rating_kp' => $this->getRatingData($rating, false),
+                    'rating_IMDb' => $this->getRatingData($ratingIMDb, true),
                     'imageLink' => $link,
                     'genre' => $genre
                 ];
@@ -95,6 +95,20 @@ class KinopoiskRandom
             }
         }
         $this->array_data = $dataFilms;
+    }
+
+    private function getRatingData($string, $IMDb) {
+        $ratingCount = str_replace(")", '', explode(' (', $string)[1]);
+        $ratingValue = explode(' (', $string)[0];
+        if ($IMDb) {
+            $ratingValue = str_replace("IMDb: ", '', $ratingValue);
+        }
+        $ratingValue = number_format(round($ratingValue, 2), 2);
+
+        return [
+            'ratingValue' => $ratingValue,
+            'ratingCount' => $ratingCount,
+        ];
     }
 
     private function _converterCyrillic ($string) {
