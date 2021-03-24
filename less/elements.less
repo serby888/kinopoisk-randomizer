@@ -1,27 +1,31 @@
 /* Buttons */
 
-@button-background-color: @white;
+@button-background-color: transparent;
 @button-color: @main-color;
 @button-border-color: @main-color;
 @button-hover-background-color: @main-color;
 @button-hover-color: @white;
 
 .button {
+  background-color: #00000026;
+  backdrop-filter: blur(15px);
+  color: #fff;
+  mix-blend-mode: overlay;
+  border: 1px solid #fff;
   border-radius: 5px;
-  border-width: 1px;
   width: 50%;
   height: 50px;
   margin: 10px;
   outline: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  font-weight: 300;
+  font-size: 22px;
+  transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
 
-  &-minimalistic {
-    transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
-    background-color: @button-background-color;
-    color: @button-color;
-    border-color: @button-border-color;
-  }
-  &:hover {
-    background-color: @button-hover-background-color;
-    color: @button-hover-color;
+  &:hover,
+  &:focus {
+    outline: none;
+    background-color: #00000000;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
   }
 }
