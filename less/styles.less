@@ -1,16 +1,33 @@
 @import "variables";
 @import "elements";
+@import "dice";
 
 @start-animation-delay: .4s;
 
 html, body {
     height: 100%;
 }
-span {
-    font-weight: 900;
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
 }
-h1 {
-    font-weight: 100;
+
+.container-fluid.h-100 {
+    background: url(../media/background.jpg);
+    image-rendering: -webkit-optimize-contrast;
+    background-size: cover;
+}
+.wrapper-title {
+    position: relative;
+    h1 {
+        mix-blend-mode: overlay;
+        color: #ffffff;
+        font-weight: 100;
+        span {
+            font-weight: 900;
+        }
+    }
 }
 
 .top {
@@ -49,7 +66,14 @@ h1 {
 
 .film-item {
     height: 110px;
-    background: #efefef;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: #fff;
+    @supports (-moz-appearance:none) {
+        background-color: #fff;
+    }
+    background: #00000057;
+    //mix-blend-mode: overlay;
     padding: 15px;
     border-radius: 30px;
     margin-bottom: 10px;
@@ -57,26 +81,22 @@ h1 {
     display: block;
     animation: fadeIn 1s cubic-bezier(0.19, 0.9, 0.32, 1.28) ;
     animation-fill-mode: both;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     .movie-genre,
     .movie-title {
         white-space: nowrap;
         overflow: hidden;
         position: relative;
-        &:after {
-            content: "";
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 40px;
-            height: 100%;
-            background: linear-gradient(to left, rgb(239 239 239), #fff0 100%);
-        }
+        -webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+        mask-image: linear-gradient(to right, black 50%, transparent 100%);
     }
     .film-item-rating {
         .rating-value {
             font-size: 20px;
             font-weight: 700;
             margin-right: 5px;
+            white-space: nowrap;
+
             &--negative {
                 color: #ff0000;
             }
@@ -89,14 +109,26 @@ h1 {
         }
         .rating-count {
             color: #888;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 10px;
+            vertical-align: super;
+            font-weight: 400;
+            white-space: nowrap;
         }
         .rating-title {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 10px;
+            font-weight: 900;
+            vertical-align: super;
             margin-left: 5px;
+            color: #313131;
+            white-space: nowrap;
         }
+    }
+    &-info {
+        mix-blend-mode: difference;
+        color: #f3f3f3;
+    }
+    &-poster {
+        border-radius: 10px;
     }
 }
 
