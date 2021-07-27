@@ -7,9 +7,12 @@ class KinopoiskRandom
     private $array_numbers = [];
     private $array_data = [];
     private $array_numbers_two = [];
+    private $filterEnabled;
+    private $allGenres = ['Аниме', 'Биографии', 'Боевики', 'Вестерны', 'Военные', 'Детективы', 'Детские', 'Документальные', 'Драмы', 'Игры', 'Исторические', 'Комедии', 'Концерты', 'Короткометражки', 'Криминал', 'Мелодрамы', 'Музыкальные', 'Мультфильмы', 'Мюзиклы', 'Новости', 'Приключения', 'Реальное', 'Семейные', 'Спортивные', 'Ток', 'Триллеры', 'Ужасы', 'Фантастика', 'Фильмы', 'Фэнтези', 'Церемонии'];
+    private $idsGenres = [];
     public  $response = [];
 
-    function __construct()
+    function __construct($idsGenres)
     {
 
         include('phpQuery-onefile.php');
@@ -19,6 +22,17 @@ class KinopoiskRandom
         phpQuery::newDocumentHTML($html); 
         $count = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
 
+        if ($idsGenres) {
+            $this->filterEnabled = true;
+            $this->idsGenres = $idsGenres;
+        } else {
+            $this->filterEnabled = false;
+        }
+
+//        echo '<pre>';
+//        var_dump($count);
+//        echo '</pre>';
+//        die();
         $this->count_all = $count;
         $this->count_iteration = rand(5, 8);
     }
@@ -131,7 +145,7 @@ class KinopoiskRandom
         }
     }    
 
-    private function _deleteDuplicate(&$array){
+    private function _deleteDuplicate(&$array) {
         $array = array_unique($array);
     }
 
@@ -143,8 +157,7 @@ class KinopoiskRandom
         }
     }
 
-    private function _createCorrectlyArray(&$array, $mode)
-    {
+    private function _createCorrectlyArray(&$array, $mode) {
         // проверка на наличие дубликатов, их удаление, расчет разницы, запись в массив недостающих элементов
         while(!$this->_checkArray($array)){
             $difference = $this->count_iteration - count($array);

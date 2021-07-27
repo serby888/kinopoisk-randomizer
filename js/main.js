@@ -19,7 +19,9 @@ $(function() {
                 dataType: "json",
                 url: 'controllers/ControllerRandomizer.php',
                 type: 'POST',
-                data: {}
+                data: {
+                    genres: getIdsGenre()
+                }
             }).done(function( result ){
                 viewItemsFilm(result.data.films);
                 setTimeout(function () {
@@ -36,6 +38,21 @@ $(function() {
                 closeResult();
             }
         });
+    }
+    
+    function getIdsGenre() {
+        let idsGenre = [],
+            itemGenre =  $('.active-filters .item-genre');
+
+        if (itemGenre.data().idGenre !== 0) {
+            itemGenre.each(function () {
+                idsGenre.push($(this).data().idGenre);
+            });
+        } else {
+            idsGenre = 0;
+        }
+
+        return idsGenre;
     }
 
     function closeResult() {

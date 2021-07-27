@@ -8,8 +8,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet/less" type="text/css" href="less/styles.less" />
     <script src="libs/less.min.js" type="text/javascript"></script>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/randomize.ico" type="image/x-icon">
     <script src="js/main.js" type="text/javascript"></script>
+    <script src="libs/select.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="container-fluid h-100">
@@ -93,4 +94,3 @@
 </div>
 </body>
 </html>
-<!--<script src="libs/select.js" type="text/javascript"></script>-->

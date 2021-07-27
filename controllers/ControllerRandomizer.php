@@ -1,7 +1,7 @@
 <?php
 
 include('../classes/kinopoisk.php');
-$kinopoisk = new KinopoiskRandom();
+$kinopoisk = new KinopoiskRandom($_POST['genres']);
 $kinopoisk->main();
 
 header('Content-type: application/json');
