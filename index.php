@@ -12,14 +12,79 @@
     <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
-<div class="container-fluid h-100">
-    <a class="close" href="#"></a>
+    <div class="container-fluid h-100">
+        <a class="close" href="#"></a>
+
+        <div class="wrapper-filters">
+            <div class="active-filters">
+                <div data-id-genre="0" class="item-genre">Все жанры</div>
+            </div>
+            <div class="filters-genre">
+                <div class="select-wrapper">
+                    <select >
+                        <option value="0">Список жанров</option>
+                        <option value="1">Аниме</option>
+                        <option value="2">Биографии</option>
+                        <option value="3">Боевики</option>
+                        <option value="4">Вестерны</option>
+                        <option value="5">Детективы</option>
+                        <option value="6">Детские</option>
+                        <option value="7">Документальные</option>
+                        <option value="8">Драмы</option>
+                        <option value="9">Игры</option>
+                        <option value="10">Исторические</option>
+                        <option value="11">Комедии</option>
+                        <option value="12">Концерты</option>
+                        <option value="13">Короткометражки</option>
+                        <option value="14">Криминал</option>
+                        <option value="15">Мелодрамы</option>
+                        <option value="16">Музыкальные</option>
+                        <option value="17">Мультфильмы</option>
+                        <option value="18">Мюзиклы</option>
+                        <option value="19">Новости</option>
+                        <option value="20">Приключения</option>
+                        <option value="21">Реальное ТВ</option>
+                        <option value="22">Семейные</option>
+                        <option value="23">Спортивные</option>
+                        <option value="24">Ток-шоу</option>
+                        <option value="25">Триллеры</option>
+                        <option value="26">Ужасы</option>
+                        <option value="27">Фантастика</option>
+                        <option value="28">Фильмы-нуар</option>
+                        <option value="29">Фэнтези</option>
+                        <option value="30">Церемонии</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filters-type">
+                <div class="select-wrapper">
+                    <select >
+                        <option value="0">Все типы</option>
+                        <option value="1">Фильмы</option>
+                        <option value="2">Сериалы</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
     <div id="rowRand" class="row h-100 justify-content-md-center align-items-center">
         <div  class="col-md-auto text-center">
             <h1>Randomizer <span>КиноПоиск</span> </h1>
             <button class="button button-minimalistic" id="buttonRandom" type="button">Go</button>
         </div>
     </div>
+
+        <div class="database-section">
+            <?php
+                include('classes/Kinopoisk_Database.php');
+                $kinopoisk = new Kinopoisk_Database();
+            ?>
+            <p>checkbox (use DB)</p>
+            <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
+            <p>last Update <?= $kinopoisk->getLastUpdateDate() ?></p>
+            <p>qty films <?= $kinopoisk->getCountFilms() ?></p>
+        </div>
+
     <div class="row" id="content">
         <div class="col-xl-4">
             <div id="first" class="block-content"></div>

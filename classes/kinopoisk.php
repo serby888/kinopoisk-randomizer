@@ -44,7 +44,7 @@ class KinopoiskRandom
         $array_keys = array_keys($this->array_numbers_two);
         $this->film = $this->array_numbers_two[$array_keys[rand(0, count($array_keys) - 1 )]];
 
-        $this->_getData($this->array_numbers);
+        $this->getData($this->array_numbers);
 
         $this->response = [
             'stages' => [
@@ -67,11 +67,10 @@ class KinopoiskRandom
 //        fclose($fp);
     }
 
-    private function _getData($numbersFilms) {
+    public function getData($numbersFilms) {
         $dataFilms = [];
         foreach (pq('ul#itemList li') as $film) {
-            $number = (int)pq($film)->find('div.num')->text();
-            if (in_array($number, $numbersFilms)) {
+            if ($numbersFilms == "all" || in_array((int)pq($film)->find('div.num')->text(), $numbersFilms)) {
                 $link = 'https://www.kinopoisk.ru' . pq($film)->find('.images .poster .flap_img')->attr('title');
                 $name = $this->_converterCyrillic(pq($film)->find('.info .name')->text());
                 $nameString = $this->_converterCyrillic(pq($film)->find('.info span:eq(0)')->text());
@@ -80,7 +79,7 @@ class KinopoiskRandom
                 $ratingIMDb = pq($film)->find('.imdb')->text();
 
                 $infoFilm = [
-                    'id' => $number,
+                    'id' => (int)pq($film)->find('div.num')->text(),
                     'name' => [
                         'rus' => $name,
                         'eng' => $nameString,
@@ -107,7 +106,7 @@ class KinopoiskRandom
 
         return [
             'ratingValue' => $ratingValue,
-            'ratingCount' => $ratingCount,
+            'ratingCount' => str_replace(' ', '', $ratingCount),
         ];
     }
 

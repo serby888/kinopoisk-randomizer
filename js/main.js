@@ -1,6 +1,17 @@
 $(function() {
     main();
     function main() {
+
+        $('#updateDatabase').off().on('click', function () {
+            $.ajax({
+                dataType: "json",
+                url: 'controllers/ControllerDatabase.php',
+                type: 'POST'
+            }).done(function( result ){
+                console.log(result);
+            });
+        });
+
         $('#buttonRandom').off().on('click', function () {
             $('#rowRand').fadeOut();
             $('.close').fadeIn();
