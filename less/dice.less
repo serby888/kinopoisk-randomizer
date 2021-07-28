@@ -1,0 +1,72 @@
+.scene {
+	perspective: 400px;
+	position: absolute;
+	top: -30px;
+	right: -100px;
+
+	.cube {
+		width: 100px;
+		height: 100px;
+		position: relative;
+		transform-style: preserve-3d;
+		transform: translateZ(-50px);
+		transition: transform 1s;
+		animation: rotation-cube linear infinite 8s;
+
+		&__face {
+			position: absolute;
+			width: 100px;
+			height: 100px;
+			border: 2px solid #fff;
+			line-height: 100px;
+			font-size: 40px;
+			font-weight: bold;
+			color: white;
+			text-align: center;
+			background: #00000040;
+
+			&--back {
+				display: flex;
+				justify-content: center;
+				align-items: flex-end;
+				line-height: 30px;
+			}
+
+			&--top {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				line-height: 60px;
+			}
+
+			&--front { transform: rotateY(0deg) translateZ(50px); }
+
+			&--right {
+				font-size: 18px;
+				transform: rotateY(90deg) translateZ(50px);
+
+				span {
+					transform: rotate(45deg);
+					position: absolute;
+					top: 0;
+					left: 0;
+				}
+			}
+
+			&--back   { transform: rotateY(180deg) translateZ(50px); }
+			&--left   { transform: rotateY(-90deg) translateZ(50px); font-size: 18px; }
+			&--top    { transform: rotateX( 90deg) translateZ(50px); }
+			&--bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+			.dot:before {
+				content: ' \25CF';
+				font-size: 40px;
+			}
+		}
+	}
+}
+
+@keyframes rotation-cube {
+	0%    { transform: translateZ(-100px) rotateY(40deg) rotateX(0);  }
+	100%  { transform: translateZ(-100px) rotateY(-320deg) rotateX(720deg); }
+}

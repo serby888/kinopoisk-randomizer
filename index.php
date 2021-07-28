@@ -70,6 +70,55 @@
     <div id="rowRand" class="row h-100 justify-content-md-center align-items-center">
         <div class="col-md-auto text-center">
             <h1>Randomizer <span>КиноПоиск</span> </h1>
+        <div  class="col-md-auto text-center">
+
+            <div class="wrapper-title">
+                <h1>Randomizer <span>КиноПоиск</span></h1>
+                <div class="scene">
+                    <div class="cube">
+                        <div class="cube__face cube__face--front">
+                            <span class="dot"></span>
+                        </div>
+                        <div class="cube__face cube__face--back">
+                            <div>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                            <div>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                            <div>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube__face cube__face--right"><span>КиноПоиск</span></div>
+                        <div class="cube__face cube__face--left">IMDb</div>
+                        <div class="cube__face cube__face--top">
+                            <div>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                            <div>
+                                <span class="dot"></span>
+                            </div>
+                            <div>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                        </div>
+                        <div class="cube__face cube__face--bottom">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <button class="button button-minimalistic" id="buttonRandom" type="button">Go</button>
         </div>
     </div>
