@@ -5,6 +5,11 @@ class Kinopoisk_Database
 {
     private $films, $conn, $db_name;
 
+    public $status = [
+        'status' => false,
+        'message' => 'Connection failed'
+    ];
+
 
     function __construct()
     {
@@ -16,7 +21,9 @@ class Kinopoisk_Database
         if ($this->conn->connect_error) {
             die("Connection failed: " . $this->conn->connect_error);
         }
-        echo "Connected successfully";
+
+        $this->status['status'] = true;
+        $this->status['message'] = "Connected successfully";
     }
 
     private function _preUpdate() {

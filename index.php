@@ -79,7 +79,13 @@
                 include('classes/Kinopoisk_Database.php');
                 $kinopoisk = new Kinopoisk_Database();
             ?>
-            <p>checkbox (use DB)</p>
+            <span class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>"><?= $kinopoisk->status['message'] ?></span>
+
+            <label class="container">use DB
+                <input type="checkbox">
+                <span class="checkmark"></span>
+            </label>
+
             <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
             <p>last Update <?= $kinopoisk->getLastUpdateDate() ?></p>
             <p>qty films <?= $kinopoisk->getCountFilms() ?></p>
