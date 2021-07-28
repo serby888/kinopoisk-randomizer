@@ -8,7 +8,7 @@ class Kinopoisk_Database
 
     function __construct()
     {
-        $configs = include('config.php');
+        $configs = include_once($_SERVER['DOCUMENT_ROOT'] . "/randomizer-kinopoisk/config.php");
         $this->db_name = $configs['db_name'];
 
         $this->conn = new mysqli($configs['host'], $configs['username'], $configs['password'], $this->db_name);
@@ -21,7 +21,7 @@ class Kinopoisk_Database
 
     private function _preUpdate() {
         include('../classes/kinopoisk.php');
-        $kinopoisk = new KinopoiskRandom(false);
+        $kinopoisk = new KinopoiskRandom();
         $kinopoisk->getData('all');
         $this->films = $kinopoisk->array_data;
     }

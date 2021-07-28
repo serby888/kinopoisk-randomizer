@@ -5,7 +5,7 @@ class KinopoiskRandom
     private $count_iteration;
     private $film, $count_all;
     private $array_numbers = [];
-    private $array_data = [];
+    public $array_data = [];
     private $array_numbers_two = [];
     public  $response = [];
 

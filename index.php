@@ -68,7 +68,7 @@
         </div>
 
     <div id="rowRand" class="row h-100 justify-content-md-center align-items-center">
-        <div  class="col-md-auto text-center">
+        <div class="col-md-auto text-center">
             <h1>Randomizer <span>КиноПоиск</span> </h1>
             <button class="button button-minimalistic" id="buttonRandom" type="button">Go</button>
         </div>
