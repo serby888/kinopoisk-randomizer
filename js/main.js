@@ -1,4 +1,11 @@
 $(function() {
+    Particles.init({
+        selector: '.background',
+        connectParticles: true,
+        color: '#eeeeee',
+        speed: 0.3
+    });
+
     main();
     function main() {
 

@@ -11,8 +11,14 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <link rel="stylesheet/less" type="text/css" href="less/styles.less"/>
+    <script>
+        less = {
+            async: true,
+        };
+    </script>
     <script src="libs/less.min.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <script src="libs/particles.min.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
@@ -147,6 +153,8 @@
             </div>
         </div>
     </div>
+
+    <canvas class="background"></canvas>
 </body>
 </html>
 <!--<script src="libs/select.js" type="text/javascript"></script>-->
