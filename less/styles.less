@@ -247,11 +247,69 @@ html, body {
 }
 
 .database-section {
-  border: 1px solid #202428;
-  border-radius: 10px;
+  background-color: #303a4533;
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+  color: #eeeeeed1;
+  font-family: monospace;
   position: absolute;
   top: 20px;
-  right: 20px;
-  width: 10%;
+  right: -16%;
+  width: 16%;
+  transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+
+  &:after {
+    content: "";
+    width: 20px;
+    height: 100px;
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    right: 0;
+    .button-showing {
+      width: 0;
+      left: 0;
+      opacity: 0;
+    }
+  }
+
+  .status-connection {
+    &.success {
+      text-align: center;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      background-color: #00800078;
+    }
+  }
+  .button {
+    width: 90%;
+  }
+  .button-showing {
+    background: #0000008c;
+    color: #ffffffbf;
+    height: 100px;
+    left: -20px;
+    position: absolute;
+    top: 25px;
+    text-align: center;
+    text-orientation: mixed;
+    transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+    width: 20px;
+    writing-mode: vertical-lr;
+  }
+
+  .qty-films,
+  .last-update {
+    margin-left: 10px;
+  }
+
+  .last-update {
+    margin-bottom: 20px;
+    .interval {
+      display: block;
+      font-size: 12px;
+    }
+  }
 }
 

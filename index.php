@@ -131,20 +131,29 @@
         </div>
 
         <div class="database-section">
+            <div class="button-showing">DB info</div>
             <?php
-            include('classes/Kinopoisk_Database.php');
-            $kinopoisk = new Kinopoisk_Database();
+                include('classes/Kinopoisk_Database.php');
+                $kinopoisk = new Kinopoisk_Database();
             ?>
-            <span class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>"><?= $kinopoisk->status['message'] ?></span>
+            <div class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>"><?= $kinopoisk->status['message'] ?></div>
 
             <label class="container-checkbox">Use Database
                 <input type="checkbox">
                 <span class="checkmark"></span>
             </label>
+            <?php
+                $info = $kinopoisk->getLastUpdateDate();
+            ?>
+            <div class="last-update">
+                <span class="title">Last Update:</span>
+                <span class="time"><?= $info['last-update'] ?></span>
+                <span class="interval"><?= $info['interval'] ?></span>
+            </div>
+            <div class="qty-films">Quantity films: <?= $kinopoisk->getCountFilms() ?></div>
+
 
             <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
-            <p>last Update <?= $kinopoisk->getLastUpdateDate() ?></p>
-            <p>qty films <?= $kinopoisk->getCountFilms() ?></p>
         </div>
 
         <div class="row" id="content">

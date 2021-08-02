@@ -42,8 +42,31 @@ class Kinopoisk_Database
         }
     }
 
+    private function _correctIntervalFormat ($dateInterval) {
+        $string = '%d days %h hours %i minutes %s seconds ago';
+
+        if (!$dateInterval->d) {
+            $string = '%h hours %i minutes %s seconds ago';
+            if (!$dateInterval->h) {
+                $string = '%i minutes %s seconds ago';
+                if (!$dateInterval->i) {
+                    $string = '%s seconds ago';
+                }
+            }
+        }
+
+        return $dateInterval->format($string);
+    }
+
     public function getLastUpdateDate() {
-        return $this->conn->query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = '".$this->db_name."' AND TABLE_NAME = 'films'")->fetch_assoc()["UPDATE_TIME"];
+        $now = new DateTime('now');
+        $lastUpdate = new DateTime($this->conn->query("SELECT last_update FROM mysql.innodb_table_stats WHERE table_name = 'films'")->fetch_assoc()["last_update"]);
+        $interval = $now->diff($lastUpdate);
+
+        return [
+            'last-update' => $lastUpdate->format('d-m-Y H:i:s'),
+            'interval' => $this->_correctIntervalFormat($interval)
+        ];
     }
 
     public function getCountFilms() {
