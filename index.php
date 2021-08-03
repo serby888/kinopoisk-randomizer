@@ -139,7 +139,7 @@
             <div class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>"><?= $kinopoisk->status['message'] ?></div>
 
             <label class="container-checkbox">Use Database
-                <input type="checkbox">
+                <input type="checkbox" id="use-db">
                 <span class="checkmark"></span>
             </label>
             <?php

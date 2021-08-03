@@ -8,7 +8,6 @@ $(function() {
 
     main();
     function main() {
-
         $('#updateDatabase').off().on('click', function () {
             $.ajax({
                 dataType: "json",
@@ -26,7 +25,9 @@ $(function() {
                 dataType: "json",
                 url: 'controllers/ControllerRandomizer.php',
                 type: 'POST',
-                data: {}
+                data: {
+                    'use-db': $('#use-db').is(':checked'),
+                }
             }).done(function( result ){
                 viewItemsFilm(result.data.films);
                 setTimeout(function () {

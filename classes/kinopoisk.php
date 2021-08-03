@@ -2,24 +2,37 @@
 
 class KinopoiskRandom
 {
-    private $count_iteration;
-    private $film, $count_all;
-    private $array_numbers = [];
-    public $array_data = [];
-    private $array_numbers_two = [];
-    public  $response = [];
+    private
+        $film,
+        $_useDb,
+        $count_all,
+        $database,
+        $count_iteration,
+        $array_numbers_two = [],
+        $array_numbers = [];
 
-    function __construct()
+    public
+        $array_data = [],
+        $response = [];
+
+    function __construct($useDb)
     {
+        $this->_useDb = ($useDb === 'true');
 
-        include('phpQuery-onefile.php');
-        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
-//        $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
-        $html = str_replace("&nbsp;", ' ', $html);
-        phpQuery::newDocumentHTML($html); 
-        $count = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
+        if ($this->_useDb) {
+            include('Kinopoisk_Database.php');
+            $this->database = new Kinopoisk_Database();
+            $this->count_all = $this->database->getCountFilms();
+        } else {
+            include('phpQuery-onefile.php');
+//        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/type/3575/sort/default/vector/desc/vt/all/perpage/200/');
+//        $html = file_get_contents('https://www.kinopoisk.ru/user/5679443/movies/list/sort/default/vector/desc/perpage/all/');
+            $html = file_get_contents('../kp.html'); //использовать локальный, если по ссылке забанили
+            $html = str_replace("&nbsp;", ' ', $html);
+            phpQuery::newDocumentHTML($html);
+            $this->count_all = (int)substr(pq('div.pagesFromTo:eq(0)')->text(), -3);
+        }
 
-        $this->count_all = $count;
         $this->count_iteration = rand(5, 8);
     }
 
@@ -69,30 +82,59 @@ class KinopoiskRandom
 
     public function getData($numbersFilms) {
         $dataFilms = [];
-        foreach (pq('ul#itemList li') as $film) {
-            if ($numbersFilms == "all" || in_array((int)pq($film)->find('div.num')->text(), $numbersFilms)) {
-                $link = 'https://www.kinopoisk.ru' . pq($film)->find('.images .poster .flap_img')->attr('title');
-                $name = $this->_converterCyrillic(pq($film)->find('.info .name')->text());
-                $nameString = $this->_converterCyrillic(pq($film)->find('.info span:eq(0)')->text());
-                $genre = $this->_converterCyrillic(pq($film)->find('.info span:eq(1)')->text());
-                $rating = pq($film)->find('.rating')->text();
-                $ratingIMDb = pq($film)->find('.imdb')->text();
+
+        if ($this->_useDb) {
+            foreach ($numbersFilms as $filmId) {
+
+                $film = $this->database->getFilmById($filmId);
 
                 $infoFilm = [
-                    'id' => (int)pq($film)->find('div.num')->text(),
+                    'id' => (int)$film['id'],
                     'name' => [
-                        'rus' => $name,
-                        'eng' => $nameString,
-                        'for_torrent' => strtok($nameString, ')').')'
+                        'rus' => $film['name_rus'],
+                        'eng' => $film['name_eng'],
+                        'for_torrent' => $film['name_eng'] . ' (' . $film['release_year'] . ')'
                     ],
-                    'rating_kp' => $this->getRatingData($rating, false),
-                    'rating_IMDb' => $this->getRatingData($ratingIMDb, true),
-                    'imageLink' => $link,
-                    'genre' => $genre
+                    'rating_kp' => [
+                        'ratingValue' => $film['rating_kp'],
+                        'ratingCount' => $film['rating_kp_count'],
+                    ],
+                    'rating_IMDb' =>[
+                        'ratingValue' => $film['rating_imdb'],
+                        'ratingCount' => $film['rating_imdb_count'],
+                    ],
+                    'imageLink' => $film['image_link'],
+                    'genre' => 'not working'
                 ];
                 array_push($dataFilms, $infoFilm);
             }
+        } else {
+            foreach (pq('ul#itemList li') as $film) {
+                if ($numbersFilms == "all" || in_array((int)pq($film)->find('div.num')->text(), $numbersFilms)) {
+                    $link = 'https://www.kinopoisk.ru' . pq($film)->find('.images .poster .flap_img')->attr('title');
+                    $name = $this->_converterCyrillic(pq($film)->find('.info .name')->text());
+                    $nameString = $this->_converterCyrillic(pq($film)->find('.info span:eq(0)')->text());
+                    $genre = $this->_converterCyrillic(pq($film)->find('.info span:eq(1)')->text());
+                    $rating = pq($film)->find('.rating')->text();
+                    $ratingIMDb = pq($film)->find('.imdb')->text();
+
+                    $infoFilm = [
+                        'id' => (int)pq($film)->find('div.num')->text(),
+                        'name' => [
+                            'rus' => $name,
+                            'eng' => $nameString,
+                            'for_torrent' => strtok($nameString, ')').')'
+                        ],
+                        'rating_kp' => $this->getRatingData($rating, false),
+                        'rating_IMDb' => $this->getRatingData($ratingIMDb, true),
+                        'imageLink' => $link,
+                        'genre' => $genre
+                    ];
+                    array_push($dataFilms, $infoFilm);
+                }
+            }
         }
+
         $this->array_data = $dataFilms;
     }
 
