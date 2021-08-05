@@ -8,7 +8,7 @@ class Kinopoisk_Database
     public $status = [];
 
 
-    function __construct()
+    public function __construct()
     {
         $configs = include_once($_SERVER['DOCUMENT_ROOT'] . "/randomizer-kinopoisk/config.php");
         $this->db_name = $configs['db_name'];

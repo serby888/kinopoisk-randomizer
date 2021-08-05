@@ -20,6 +20,13 @@
     <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
+
+<?php
+    include('classes/Index.php');
+    $block = new Index();
+    $kinopoisk = @$block->getStatusDataBase();
+    $info = $kinopoisk->getLastUpdateDate();
+?>
     <a class="close" href="#"></a>
 
     <div class="wrapper-filters">
@@ -126,10 +133,6 @@
 
     <div class="database-section">
         <div class="button-showing">DB info</div>
-        <?php
-            include('classes/Kinopoisk_Database.php');
-            $kinopoisk = new Kinopoisk_Database();
-        ?>
 
         <div class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>">
             <object class="svg-wrapper" data="media/push-pin.svg" width="20" height="20"></object>
@@ -140,9 +143,6 @@
                 <input type="checkbox" id="use-db">
                 <span class="checkmark"></span>
             </label>
-            <?php
-            $info = $kinopoisk->getLastUpdateDate();
-            ?>
             <div class="last-update">
                 <span class="title">Last Update:</span>
                 <span class="time"><?= $info['last-update'] ?></span>
