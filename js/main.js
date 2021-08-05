@@ -12,7 +12,23 @@ $(function() {
             $.ajax({
                 dataType: "json",
                 url: 'controllers/ControllerDatabase.php',
-                type: 'POST'
+                type: 'POST',
+                data: {
+                    'mode': 'update'
+                }
+            }).done(function( result ){
+                console.log(result);
+            });
+        });
+
+        $('#createDatabase').off().on('click', function () {
+            $.ajax({
+                dataType: "json",
+                url: 'controllers/ControllerDatabase.php',
+                type: 'POST',
+                data: {
+                    'mode': 'create'
+                }
             }).done(function( result ){
                 console.log(result);
             });
@@ -71,23 +87,26 @@ $(function() {
     function startAnimation(stages) {
         let twoStep = stages['two'];
 
-        toLeft($("#film-item-" + twoStep[0]), 630);
+        let widthElement = $('.film-item').first().outerWidth() + 50;
+        let offset = (window.outerWidth - ( widthElement * 3 )) / 2 + widthElement;
+
+        toLeft($("#film-item-" + twoStep[0]), offset);
         toTop($("#film-item-" + twoStep[0]), 130);
 
         setTimeout(function () {
-            toLeft($("#film-item-" + twoStep[1]), 630);
+            toLeft($("#film-item-" + twoStep[1]), offset);
             toTop($("#film-item-" + twoStep[1]), 250);
         }, 1000);
 
         setTimeout(function () {
-            toLeft($("#film-item-" + twoStep[2]), 630);
+            toLeft($("#film-item-" + twoStep[2]), offset);
             toTop($("#film-item-" + twoStep[2]), 370);
         }, 2000);
 
         let threeStep = stages['three'];
 
         setTimeout(function () {
-            toLeft($("#film-item-" + threeStep), 1260);
+            toLeft($("#film-item-" + threeStep), offset * 2);
         }, 4000);
     }
 

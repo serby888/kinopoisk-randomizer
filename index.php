@@ -126,7 +126,6 @@
 
     <div class="database-section">
         <div class="button-showing">DB info</div>
-
         <?php
             include('classes/Kinopoisk_Database.php');
             $kinopoisk = new Kinopoisk_Database();
@@ -136,26 +135,26 @@
             <object class="svg-wrapper" data="media/push-pin.svg" width="20" height="20"></object>
             <?= $kinopoisk->status['message'] ?>
         </div>
-
-
-        <label class="container-checkbox">Use Database
-            <input type="checkbox" id="use-db">
-            <span class="checkmark"></span>
-        </label>
-
-        <?php
+        <?php if($kinopoisk->status['status']): ?>
+            <label class="container-checkbox">Use Database
+                <input type="checkbox" id="use-db">
+                <span class="checkmark"></span>
+            </label>
+            <?php
             $info = $kinopoisk->getLastUpdateDate();
-        ?>
+            ?>
+            <div class="last-update">
+                <span class="title">Last Update:</span>
+                <span class="time"><?= $info['last-update'] ?></span>
+                <span class="interval"><?= $info['interval'] ?></span>
+            </div>
+            <div class="qty-films">Quantity films: <?= $kinopoisk->getCountFilms() ?></div>
 
-        <div class="last-update">
-            <span class="title">Last Update:</span>
-            <span class="time"><?= $info['last-update'] ?></span>
-            <span class="interval"><?= $info['interval'] ?></span>
-        </div>
-
-        <div class="qty-films">Quantity films: <?= $kinopoisk->getCountFilms() ?></div>
-
-        <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
+            <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
+        <?php else: ?>
+            <div class="error-text"><?= $kinopoisk->status['error'] ?></div>
+            <button class="button button-minimalistic" id="createDatabase" type="button">Create DB</button>
+        <?php endif; ?>
     </div>
 
     <div class="row" id="content">
