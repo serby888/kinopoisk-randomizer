@@ -146,6 +146,45 @@ class Kinopoisk_Database
     }
 
     public function create() {
-        $this->conn->query("CREATE DATABASE IF NOT EXISTS $this->db_name");
+
+        $status = [];
+
+        if ($this->conn->query("CREATE DATABASE IF NOT EXISTS $this->db_name") === TRUE) {
+            $status['database']['status'] = true;
+            $status['database']['message'] = "Database $this->db_name created successfully";
+        } else {
+            $status['database']['status'] = false;
+            $status['database']['message'] = "Error creating database: " . $this->conn->error;
+        }
+
+        $this->conn->select_db($this->db_name);
+
+        $sql = "CREATE TABLE films (
+            id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            name_rus TEXT NOT NULL,
+            name_eng VARCHAR(255) NOT NULL,
+            release_year INT(11) NOT NULL,
+            end_year INT(11) NULL,
+            length_film INT(11) NOT NULL,
+            rating_kp VARCHAR(255) NOT NULL,
+            rating_kp_count INT(255) NULL,
+            rating_imdb VARCHAR(255) NOT NULL,
+            rating_imdb_count INT(255) NOT NULL,
+            image_link TEXT NOT NULL,
+            series BOOLEAN NOT NULL
+            )";
+
+
+        if ($this->conn->query($sql) === TRUE) {
+            $status['tables']['status'] = true;
+            $status['tables']['message'] = "Table films created successfully";
+        } else {
+            $status['tables']['status'] = false;
+            $status['tables']['message'] = "Error creating table: " . $this->conn->error;
+        }
+
+        $this->conn->close();
+
+        return $status;
     }
 }

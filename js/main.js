@@ -31,6 +31,7 @@ $(function() {
                 }
             }).done(function( result ){
                 console.log(result);
+            //    not showing in console
             });
         });
 
