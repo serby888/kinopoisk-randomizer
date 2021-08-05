@@ -5,10 +5,7 @@ class Kinopoisk_Database
 {
     private $films, $conn, $db_name;
 
-    public $status = [
-        'status' => false,
-        'message' => 'Connection failed'
-    ];
+    public $status = [];
 
 
     function __construct()
@@ -19,11 +16,13 @@ class Kinopoisk_Database
         $this->conn = new mysqli($configs['host'], $configs['username'], $configs['password'], $this->db_name);
 
         if ($this->conn->connect_error) {
-            die("Connection failed: " . $this->conn->connect_error);
+            $this->status['status'] = false;
+            $this->status['message'] = "Connection failed";
+            $this->status['error'] = $this->conn->connect_error;
+        } else {
+            $this->status['status'] = true;
+            $this->status['message'] = "Connected successfully";
         }
-
-        $this->status['status'] = true;
-        $this->status['message'] = "Connected successfully";
     }
 
     private function _preUpdate() {

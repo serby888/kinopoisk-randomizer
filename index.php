@@ -137,23 +137,25 @@
                 $kinopoisk = new Kinopoisk_Database();
             ?>
             <div class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>"><?= $kinopoisk->status['message'] ?></div>
+            <?php if($kinopoisk->status['status']): ?>
+                <label class="container-checkbox">Use Database
+                    <input type="checkbox" id="use-db">
+                    <span class="checkmark"></span>
+                </label>
+                <?php
+                    $info = $kinopoisk->getLastUpdateDate();
+                ?>
+                <div class="last-update">
+                    <span class="title">Last Update:</span>
+                    <span class="time"><?= $info['last-update'] ?></span>
+                    <span class="interval"><?= $info['interval'] ?></span>
+                </div>
+                <div class="qty-films">Quantity films: <?= $kinopoisk->getCountFilms() ?></div>
 
-            <label class="container-checkbox">Use Database
-                <input type="checkbox" id="use-db">
-                <span class="checkmark"></span>
-            </label>
-            <?php
-                $info = $kinopoisk->getLastUpdateDate();
-            ?>
-            <div class="last-update">
-                <span class="title">Last Update:</span>
-                <span class="time"><?= $info['last-update'] ?></span>
-                <span class="interval"><?= $info['interval'] ?></span>
-            </div>
-            <div class="qty-films">Quantity films: <?= $kinopoisk->getCountFilms() ?></div>
-
-
-            <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
+                <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
+            <?php else: ?>
+                <div class="error-text"><?= $kinopoisk->status['error'] ?></div>
+            <?php endif; ?>
         </div>
 
         <div class="row" id="content">

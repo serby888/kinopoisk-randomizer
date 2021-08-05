@@ -274,14 +274,27 @@ html, body {
     }
   }
 
-  .status-connection {
-    &.success {
-      text-align: center;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      background-color: #00800078;
-    }
-  }
+	.status-connection {
+		text-align: center;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+
+		&.success {
+			background-color: #00800078;
+		}
+
+		&.error {
+			background-color: #A0000078;
+		}
+	}
+
+	.error-text {
+		padding: 10px;
+		font-size: 13px;
+		font-family: monospace;
+	}
+
+
   .button {
     width: 90%;
   }
