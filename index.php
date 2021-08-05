@@ -155,6 +155,7 @@
                 <button class="button button-minimalistic" id="updateDatabase" type="button">Update DB</button>
             <?php else: ?>
                 <div class="error-text"><?= $kinopoisk->status['error'] ?></div>
+                <button class="button button-minimalistic" id="createDatabase" type="button">Create DB</button>
             <?php endif; ?>
         </div>
 

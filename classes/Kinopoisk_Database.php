@@ -19,6 +19,7 @@ class Kinopoisk_Database
             $this->status['status'] = false;
             $this->status['message'] = "Connection failed";
             $this->status['error'] = $this->conn->connect_error;
+            $this->conn = new mysqli($configs['host'], $configs['username'], $configs['password']);
         } else {
             $this->status['status'] = true;
             $this->status['message'] = "Connected successfully";
@@ -142,5 +143,9 @@ class Kinopoisk_Database
         }
 
         $this->conn->close();
+    }
+
+    public function create() {
+        $this->conn->query("CREATE DATABASE IF NOT EXISTS $this->db_name");
     }
 }

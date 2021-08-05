@@ -12,7 +12,23 @@ $(function() {
             $.ajax({
                 dataType: "json",
                 url: 'controllers/ControllerDatabase.php',
-                type: 'POST'
+                type: 'POST',
+                data: {
+                    'mode': 'update'
+                }
+            }).done(function( result ){
+                console.log(result);
+            });
+        });
+
+        $('#createDatabase').off().on('click', function () {
+            $.ajax({
+                dataType: "json",
+                url: 'controllers/ControllerDatabase.php',
+                type: 'POST',
+                data: {
+                    'mode': 'create'
+                }
             }).done(function( result ){
                 console.log(result);
             });
