@@ -28,7 +28,7 @@ class Kinopoisk_Database
 
     private function _preUpdate() {
         include('../classes/kinopoisk.php');
-        $kinopoisk = new KinopoiskRandom();
+        $kinopoisk = new KinopoiskRandom(false);
         $kinopoisk->getData('all');
         $this->films = $kinopoisk->array_data;
     }
@@ -71,6 +71,10 @@ class Kinopoisk_Database
 
     public function getCountFilms() {
         return $this->conn->query("SELECT COUNT(*) FROM films")->fetch_array()[0];
+    }
+
+    public function getFilmById($id) {
+        return $this->conn->query("SELECT * FROM films WHERE id=".$id)->fetch_array();
     }
 
     public function clearTable() {
