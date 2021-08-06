@@ -140,6 +140,25 @@ class Kinopoisk_Database
             } else {
                 echo "Error: " . $sql . "<br>" . $this->conn->error;
             }
+
+
+            $filmId = $this->conn->query("SELECT LAST_INSERT_ID()")->fetch_array()[0];
+
+            $genres = explode(', ',str_replace('...', '', str_replace(')', '', str_replace('(', '', $film['genre']))));
+
+            foreach ($genres as $genre) {
+                $sql = 'INSERT 
+                        INTO genres (id_film, genre)
+                        VALUES (
+                        "'.$filmId.'", 
+                        "'.$genre.'")';
+
+                if ($this->conn->query($sql) === TRUE) {
+                    echo "New genre created successfully";
+                } else {
+                    echo "Error: " . $sql . "<br>" . $this->conn->error;
+                }
+            }
         }
 
         $this->conn->close();
@@ -160,7 +179,7 @@ class Kinopoisk_Database
         $this->conn->select_db($this->db_name);
 
         $sql = "CREATE TABLE films (
-            id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            id INT(11) AUTO_INCREMENT PRIMARY KEY,
             name_rus TEXT NOT NULL,
             name_eng VARCHAR(255) NOT NULL,
             release_year INT(11) NOT NULL,
@@ -176,11 +195,27 @@ class Kinopoisk_Database
 
 
         if ($this->conn->query($sql) === TRUE) {
-            $status['tables']['status'] = true;
-            $status['tables']['message'] = "Table films created successfully";
+            $status['tables']['films']['status'] = true;
+            $status['tables']['films']['message'] = "Table films created successfully";
         } else {
-            $status['tables']['status'] = false;
-            $status['tables']['message'] = "Error creating table: " . $this->conn->error;
+            $status['tables']['films']['status'] = false;
+            $status['tables']['films']['message'] = "Error creating table: " . $this->conn->error;
+        }
+
+        $sql = "CREATE TABLE genres (
+            id_film INT(11),
+            genre TEXT NOT NULL,
+            INDEX id_film(id_film),
+            CONSTRAINT FK_Genre FOREIGN KEY (id_film) 
+            REFERENCES films(id) ON DELETE CASCADE
+            )";
+
+        if ($this->conn->query($sql) === TRUE) {
+            $status['tables']['genres']['status'] = true;
+            $status['tables']['genres']['message'] = "Table genres created successfully";
+        } else {
+            $status['tables']['genres']['status'] = false;
+            $status['tables']['genres']['message'] = "Error creating table: " . $this->conn->error;
         }
 
         $this->conn->close();
