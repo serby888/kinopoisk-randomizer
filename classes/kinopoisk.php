@@ -87,6 +87,7 @@ class KinopoiskRandom
             foreach ($numbersFilms as $filmId) {
 
                 $film = $this->_database->getFilmById($filmId);
+                $genres = $this->_database->getGenresByFilmId($filmId);
 
                 $infoFilm = [
                     'id' => (int)$film['id'],
@@ -104,7 +105,7 @@ class KinopoiskRandom
                         'ratingCount' => $film['rating_imdb_count'],
                     ],
                     'imageLink' => $film['image_link'],
-                    'genre' => 'not working'
+                    'genre' => $genres
                 ];
                 array_push($dataFilms, $infoFilm);
             }

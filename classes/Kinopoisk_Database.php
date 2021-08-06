@@ -73,6 +73,21 @@ class Kinopoisk_Database
         return $this->conn->query("SELECT COUNT(*) FROM films")->fetch_array()[0];
     }
 
+    public function getGenresByFilmId($id) {
+        $genres = $this->conn->query("SELECT genre FROM genres LEFT JOIN films ON id_film = id WHERE films.id =".$id)->fetch_all();
+
+        $string = '';
+
+        foreach ($genres as $key => $genre) {
+            if ($key !== count($genres) - 1) {
+                $string .= $genre[0] . ', ';
+            } else {
+                $string .= $genre[0];
+            }
+        }
+        return '('.$string.')';
+    }
+
     public function getFilmById($id) {
         return $this->conn->query("SELECT * FROM films WHERE id=".$id)->fetch_array();
     }
