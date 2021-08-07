@@ -8,6 +8,18 @@ $(function() {
 
     main();
     function main() {
+
+        const el = document.querySelector('.additional-info span')
+        const fx = new TextScramble(el)
+
+        $("#use-db").on('change', function() {
+            if(this.checked) {
+                fx.setText('local database');
+            } else {
+                fx.setText('kinopoisk');
+            }
+        });
+
         $('#updateDatabase').off().on('click', function () {
             $.ajax({
                 dataType: "json",

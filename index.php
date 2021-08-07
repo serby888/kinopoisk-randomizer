@@ -17,6 +17,7 @@
     <script src="libs/less.min.js" type="text/javascript"></script>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <script src="libs/particles.min.js"></script>
+    <script src="libs/text-scramble.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </head>
 <body>
@@ -129,6 +130,7 @@
             </div>
         </div>
         <button class="button button-minimalistic" id="buttonRandom" type="button">Go</button>
+        <span class="additional-info">using <span>kinopoisk</span></span>
     </div>
 
     <div class="database-section">
