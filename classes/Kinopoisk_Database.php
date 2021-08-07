@@ -60,7 +60,7 @@ class Kinopoisk_Database
 
     public function getLastUpdateDate() {
         $now = new DateTime('now');
-        $lastUpdate = new DateTime($this->conn->query("SELECT last_update FROM mysql.innodb_table_stats WHERE table_name = 'films'")->fetch_assoc()["last_update"]);
+        $lastUpdate = new DateTime($this->conn->query("SELECT last_update FROM mysql.innodb_table_stats WHERE database_name = '".$this->db_name."' AND table_name = 'films'")->fetch_assoc()["last_update"]);
         $interval = $now->diff($lastUpdate);
 
         return [
