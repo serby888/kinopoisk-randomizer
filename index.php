@@ -3,9 +3,6 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
     <title>Randomizer КиноПоиск</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Major+Mono+Display&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet/less" type="text/css" href="less/styles.less"/>
@@ -159,10 +156,8 @@
         <?php endif; ?>
     </div>
 
-    <div class="row" id="content">
-        <div class="col-xl-4">
-            <div id="first" class="block-content"></div>
-        </div>
+    <div id="content">
+        <div id="first" class="block-content"></div>
     </div>
 
     <canvas class="background"></canvas>

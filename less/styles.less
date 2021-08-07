@@ -2,14 +2,20 @@
 @import "elements";
 @import "dice";
 
+@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+
+
 @start-animation-delay: .4s;
+@font-family--secondary: 'Major Mono Display', monospace;
+@font-family--base: 'Comfortaa', cursive;
 
 html, body {
 	height: 100%;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	font-family: 'Major Mono Display', monospace;
+	font-family: @font-family--base;
 }
 
 .background {
@@ -45,6 +51,7 @@ html, body {
 	width: 50%;
 
 	.wrapper-title {
+		font-family: @font-family--secondary;
 		position: relative;
 
 		h1 {
@@ -59,6 +66,7 @@ html, body {
 	}
 
 	.additional-info {
+		font-family: @font-family--secondary;
 		color: #fff;
 	}
 }
@@ -119,15 +127,33 @@ html, body {
 
 	.movie-genre,
 	.movie-title {
-		white-space: nowrap;
-		overflow: hidden;
-		position: relative;
-		-webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+		margin-bottom: 5px;
 		mask-image: linear-gradient(to right, black 50%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, black 50%, transparent 100%);
+		position: relative;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 
-	.film-item-rating {
+	.movie-genre {
+		font-size: 12px;
+	}
+
+	&-wrapper {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&-rating {
+		align-items: center;
+		color: #848484;
+		display: flex;
+		flex-flow: column;
+		justify-content: space-evenly;
+
 		.rating-value {
+			font-family: @font-family--secondary;
 			font-size: 20px;
 			font-weight: 700;
 			margin-right: 5px;
@@ -138,7 +164,7 @@ html, body {
 			}
 
 			&--neutral {
-				color: #333;
+				color: #848484;
 			}
 
 			&--positive {
@@ -147,9 +173,8 @@ html, body {
 		}
 
 		.rating-count {
-			color: #888;
-			font-size: 10px;
-			vertical-align: super;
+			font-family: @font-family--secondary;
+			font-size: 12px;
 			font-weight: 400;
 			white-space: nowrap;
 		}
@@ -157,16 +182,14 @@ html, body {
 		.rating-title {
 			font-size: 10px;
 			font-weight: 900;
-			vertical-align: super;
 			margin-left: 5px;
-			color: #313131;
 			white-space: nowrap;
 		}
 	}
 
 	&-info {
-		mix-blend-mode: difference;
-		color: #f3f3f3;
+		font-family: @font-family--base;
+		width: 50%;
 	}
 
 	&-poster {
@@ -252,7 +275,7 @@ html, body {
 	content: ' ';
 	height: 33px;
 	width: 2px;
-	background-color: #333;
+	background-color: #fff;
 }
 
 .close:before {
