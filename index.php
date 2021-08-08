@@ -27,7 +27,7 @@
 ?>
     <a class="close" href="#"></a>
 
-    <div class="wrapper-filters">
+    <div class="wrapper-filters" style="display: none">
         <div class="active-filters">
             <div data-id-genre="0" class="item-genre">Все жанры</div>
         </div>

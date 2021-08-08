@@ -88,12 +88,12 @@ class KinopoiskRandom
 
                 $film = $this->_database->getFilmById($filmId);
                 $genres = $this->_database->getGenresByFilmId($filmId);
-
+                $isSeries = ($film['series']) ? ' (Сериал)' : '';
                 $infoFilm = [
                     'id' => (int)$film['id'],
                     'name' => [
-                        'rus' => $film['name_rus'],
-                        'eng' => $film['name_eng'],
+                        'rus' => $film['name_rus'] . $isSeries,
+                        'eng' => $film['name_eng']. ' (' . $film['release_year'] . ') '. $film['length_film'] . ' мин.',
                         'for_torrent' => $film['name_eng'] . ' (' . $film['release_year'] . ')'
                     ],
                     'rating_kp' => [
