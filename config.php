@@ -3,6 +3,6 @@
 return [
     'host' => 'localhost',
     'username' => 'root',
-    'password' => '',
-    'db_name' => 'kinopoisk3'
+    'password' => '123',
+    'db_name' => 'kinopoisk'
 ];
