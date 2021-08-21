@@ -95,7 +95,7 @@
 /* Select */
 
 @select-background-color: #ffffff;
-@select-color: #202428;
+@select-color: #ffffff;
 @select-border-color: @button-color;
 @select-hover-background-color: @button-color;
 @select-hover-color: @button-background-color;
@@ -113,7 +113,7 @@
 
 
 .select-items div, .select-selected {
-  color: #202428;
+  color: #ffffff;
   padding: 8px 16px;
   border: 1px solid transparent;
   cursor: pointer;
@@ -121,7 +121,7 @@
 }
 .select-items {
   position: absolute;
-  background-color: #ffffff;
+  backdrop-filter: blur(5px);
   border-radius: 5px;
   border: 1px solid #202428;
   top: 100%;
@@ -145,20 +145,20 @@
 
 
 .select {
+  backdrop-filter: blur(5px);
   border-radius: 5px;
   border-width: 1px;
   height: 50px;
   outline: none;
   transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+  color: #ffffff;
   &-minimalistic {
     transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
     background-color: @button-background-color;
-    color: @button-color;
     border-color: @button-border-color;
   }
   &:hover {
     background-color: @button-hover-background-color;
-    color: @button-hover-color;
     &:after {
       border-color: #fff transparent transparent transparent;
     }
