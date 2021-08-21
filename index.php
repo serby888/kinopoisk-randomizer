@@ -134,7 +134,7 @@
         <div class="button-showing">DB info</div>
 
         <div class="status-connection <?= $kinopoisk->status['status'] ? 'success' : 'error' ?>">
-            <object class="svg-wrapper" data="media/push-pin.svg" width="20" height="20"></object>
+            <object style="display: none" class="svg-wrapper" data="media/push-pin.svg" width="20" height="20"></object>
             <?= $kinopoisk->status['message'] ?>
         </div>
         <?php if($kinopoisk->status['status']): ?>
@@ -156,10 +156,7 @@
         <?php endif; ?>
     </div>
 
-    <div id="content">
-        <div id="first" class="block-content"></div>
-    </div>
-
+    <div id="content"></div>
     <canvas class="background"></canvas>
 </body>
 </html>

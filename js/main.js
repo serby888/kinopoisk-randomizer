@@ -58,6 +58,7 @@ $(function() {
                     'use-db': $('#use-db').is(':checked'),
                 }
             }).done(function( result ){
+                console.log(result);
                 viewItemsFilm(result.data.films);
                 setTimeout(function () {
                     startAnimation(result.stages);
@@ -76,13 +77,13 @@ $(function() {
     }
 
     function closeResult() {
-        $('#first').empty();
+        $('#content').empty();
         $('#rowRand').fadeIn();
         $('.close').fadeOut();
     }
 
     function viewItemsFilm(films) {
-        let container = document.getElementById("first");
+        let container = document.getElementById("content");
         films.forEach((film) => {
             let elementFilm = createItemFilm(film);
             container.insertBefore(elementFilm, null);
