@@ -91,3 +91,101 @@
     }
   }
 }
+
+/* Select */
+
+@select-background-color: #ffffff;
+@select-color: #202428;
+@select-border-color: @button-color;
+@select-hover-background-color: @button-color;
+@select-hover-color: @button-background-color;
+
+
+
+.select-wrapper {
+  position: relative;
+  width: 40%;
+
+  select {
+    display: none;
+  }
+}
+
+
+.select-items div, .select-selected {
+  color: #202428;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+}
+.select-items {
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 5px;
+  border: 1px solid #202428;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 200ms;
+  height: 300px;
+  opacity: 1;
+  overflow: auto;
+}
+.select-hide {
+  height: 0;
+  opacity: 0;
+  border: none;
+  transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 150ms;
+}
+.select-items div:hover, .sameSelected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+.select {
+  border-radius: 5px;
+  border-width: 1px;
+  height: 50px;
+  outline: none;
+  transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+  &-minimalistic {
+    transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 300ms;
+    background-color: @button-background-color;
+    color: @button-color;
+    border-color: @button-border-color;
+  }
+  &:hover {
+    background-color: @button-hover-background-color;
+    color: @button-hover-color;
+    &:after {
+      border-color: #fff transparent transparent transparent;
+    }
+  }
+  &:after {
+    position: absolute;
+    content: "";
+    top: 22px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    transition: all cubic-bezier(0.38, 0.08, 0.61, 0.79) 250ms;
+    border: 6px solid transparent;
+    border-color: #202428 transparent transparent transparent;
+  }
+  &.select-arrow-active {
+    &:after {
+      top: 15px;
+      transform: rotate(180deg);
+    }
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+.select-items:not(.select-hide) {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}

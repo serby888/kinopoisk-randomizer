@@ -379,3 +379,46 @@ html, body {
 	}
 }
 
+
+
+
+
+
+.wrapper-filters {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 30%;
+    .active-filters {
+        border: 1px solid #202428;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-flow: wrap;
+        .item-genre {
+            background-color: #202428;
+            color: #fff;
+            padding: 5px 15px;
+            margin: 0 5px 5px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            &:after {
+                position: relative;
+                bottom: 2px;
+                content: "\d7";
+                font-size: 25px;
+                line-height: 0;
+                color: white;
+                font-weight: 400;
+                margin-left: 5px;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

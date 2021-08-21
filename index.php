@@ -12,10 +12,11 @@
         };
     </script>
     <script src="libs/less.min.js" type="text/javascript"></script>
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/randomize.ico" type="image/x-icon">
     <script src="libs/particles.min.js"></script>
     <script src="libs/text-scramble.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
+    <script src="libs/select.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 ?>
     <a class="close" href="#"></a>
 
-    <div class="wrapper-filters" style="display: none">
+    <div class="wrapper-filters">
         <div class="active-filters">
             <div data-id-genre="0" class="item-genre">Все жанры</div>
         </div>
@@ -163,4 +164,3 @@
     <canvas class="background"></canvas>
 </body>
 </html>
-<!--<script src="libs/select.js" type="text/javascript"></script>-->
